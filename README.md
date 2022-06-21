@@ -38,5 +38,7 @@ Simply use the makefile to compile and simulate the code of any particular day.
 | day2   | D flip flop with no, sync and async rst |
 | day3   | edge detector                           |
 | day4   | 8-bit 16 mode ALU                       |
-| day5   | counter                                 |
-| day6   | shift register                          |
+| day5   | N-bit width odd, even counter           |
+| day6   | shift reg - siso, sipo, piso, pipo      |
+| day7   | linear shift feedback reg (LSFB)        |
+| day8   |                                         |
