@@ -41,4 +41,4 @@ Simply use the makefile to compile and simulate the code of any particular day.
 | day5   | N-bit width odd, even counter           |
 | day6   | shift reg - siso, sipo, piso, pipo      |
 | day7   | linear shift feedback reg (LSFB)        |
-| day8   |                                         |
+| day8   | N-bit width bin to one hot encoder      |
