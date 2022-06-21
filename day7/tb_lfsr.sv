@@ -26,6 +26,7 @@ module tb_lfsr();
         
         repeat(10) begin
             @(posedge clk);
+            $display("| Time: %3d | Reset_n: %b | OutData: %b |",$time, rst_n, out_data);
         end
         $finish;
     end
