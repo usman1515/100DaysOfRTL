@@ -1,0 +1,5 @@
+day*/*.vcd
+day*/*.vvp
+day*/*.ys
+day*/netlist_*.sv
+day*/*.dot
