@@ -2,7 +2,7 @@
 
 module tb_alu ();
 
-    // localparam DATA_WIDTH = 8;
+    localparam DATA_WIDTH = 8;
     localparam T=5;
 
     logic [7:0] in_a;
@@ -11,7 +11,7 @@ module tb_alu ();
     logic [7:0] out_alu;
     logic       cout;
 
-    alu dut_alu(
+    alu #(.DATA_WIDTH (DATA_WIDTH)) dut_alu(
         .in_a    (in_a    ),
         .in_b    (in_b    ),
         .in_mode (in_mode ),
