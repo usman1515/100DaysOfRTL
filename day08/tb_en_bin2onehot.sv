@@ -24,7 +24,7 @@ module tb_bin2OneHotEncoder();
     end
 
     initial begin
-        $dumpfile("day8/day8.vcd");
+        $dumpfile("day08/day08.vcd");
         $dumpvars(0,tb_bin2OneHotEncoder);
     end
 

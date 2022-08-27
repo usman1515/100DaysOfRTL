@@ -1,9 +1,9 @@
 `timescale 1ns/100ps
 
-`include "day6/shiftreg_pipo.sv"
-`include "day6/shiftreg_piso.sv"
-`include "day6/shiftreg_sipo.sv"
-`include "day6/shiftreg_siso.sv"
+`include "day06/shiftreg_pipo.sv"
+`include "day06/shiftreg_piso.sv"
+`include "day06/shiftreg_sipo.sv"
+`include "day06/shiftreg_siso.sv"
 
 module shiftreg_top #(parameter ADDR_WIDTH=4) (
     input   logic                   clk,

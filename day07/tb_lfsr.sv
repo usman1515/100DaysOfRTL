@@ -32,7 +32,7 @@ module tb_lfsr();
     end
 
     initial begin
-        $dumpfile("day7/day7.vcd");
+        $dumpfile("day07/day07.vcd");
         $dumpvars(0,tb_lfsr);
     end
 

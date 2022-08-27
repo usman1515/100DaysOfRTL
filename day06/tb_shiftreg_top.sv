@@ -57,7 +57,7 @@ module tb_shiftreg_top();
     end
 
     initial begin
-        $dumpfile("day6/day6.vcd");
+        $dumpfile("day06/day06.vcd");
         $dumpvars(0,tb_shiftreg_top);
     end
 

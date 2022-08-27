@@ -33,7 +33,7 @@ module tb_edgeDetector();
     end
 
     initial begin
-        $dumpfile("day3/day3.vcd");
+        $dumpfile("day03/day03.vcd");
         $dumpvars(0,tb_edgeDetector);
     end
 
