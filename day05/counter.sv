@@ -1,6 +1,6 @@
 `timescale 1ns/100ps
 
-module counter #(parameter ADDR_WIDTH=8) (
+module counter #(parameter ADDR_WIDTH=2) (
     input   logic                   clk,
     input   logic                   rst_n,
     output  logic [ADDR_WIDTH-1:0]  out_cnt,

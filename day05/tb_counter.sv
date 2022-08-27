@@ -2,7 +2,7 @@
 
 module tb_counter();
 
-    localparam ADDR_WIDTH=8;
+    localparam ADDR_WIDTH=4;
     localparam T=5;
 
     logic                   clk;
@@ -28,7 +28,7 @@ module tb_counter();
             rst_n <= 1'b1;
         @(posedge clk)
             rst_n <= 1'b0;
-        
+
         repeat(10) begin
             @(posedge clk);
             $display("| Time: %3d | Reset_n: %d | OutCounter: %3d | OutCounterOdd: %3d | OutCounterEven: %3d |",
