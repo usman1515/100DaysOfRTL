@@ -1,5 +1,7 @@
+day*/*.ys
 day*/*.vcd
 day*/*.vvp
-day*/*.ys
-day*/netlist_*.sv
+day*/*.json
+day*/*.v
 day*/*.dot
+day*/*.svg
