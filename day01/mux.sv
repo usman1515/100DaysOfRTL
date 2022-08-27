@@ -1,6 +1,6 @@
 `timescale 1ns/100ps
 
-module mux2x1 #(parameter DATA_WIDTH=8) (
+module mux2x1 #(parameter DATA_WIDTH=1) (
     input   logic [DATA_WIDTH-1:0]  in_a,
     input   logic [DATA_WIDTH-1:0]  in_b,
     input   logic                   sel,
