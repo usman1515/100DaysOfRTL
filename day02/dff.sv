@@ -1,6 +1,6 @@
 `timescale 1ns/100ps
 
-module dFlipFlop #(parameter DATA_WIDTH=8) (
+module dFlipFlop #(parameter DATA_WIDTH=1) (
     input   logic                   clk,
     input   logic                   rst_n,
     input   logic [DATA_WIDTH-1:0]  in_data,
