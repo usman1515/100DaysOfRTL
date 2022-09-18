@@ -24,7 +24,7 @@ I will try my best to use FOSS and toolchains as much as I can for code compilat
 Simply use the makefile to compile and simulate the code of any particular day.
 -   To simulate code of a particular day:
     ```bash
-    make compile_dayX   # here X=(1-100) e.g. compile_day1
+    make compile_dayX   # here X=(01-100) e.g. compile_day01 - compile_day100
     ```
 -   To clean dump files from all folders:
     ```bash
@@ -32,13 +32,15 @@ Simply use the makefile to compile and simulate the code of any particular day.
     ```
 
 ## Repository Contents
-| Folder | Module                                  |
-| :----- | :-------------------------------------- |
-| day1   | N-bit width 2x1 mux                     |
-| day2   | D flip flop with no, sync and async rst |
-| day3   | edge detector                           |
-| day4   | 8-bit 16 mode ALU                       |
-| day5   | N-bit width odd, even counter           |
-| day6   | shift reg - siso, sipo, piso, pipo      |
-| day7   | linear shift feedback reg (LSFB)        |
-| day8   | N-bit width bin to one hot encoder      |
+| Folder | Module                                          |
+| :----: | :---------------------------------------------- |
+| day01  | N-bit width 2x1 mux                             |
+| day02  | D flip flop with no, sync and async rst         |
+| day03  | edge detector                                   |
+| day04  | 8-bit 16 mode ALU                               |
+| day05  | N-bit width odd, even counter                   |
+| day06  | shift reg - siso, sipo, piso, pipo              |
+| day07  | linear shift feedback reg (LSFB)                |
+| day08  | N-bit width bin to one hot encoder              |
+| day09  | N-bit width bin to gray and gray to bin encoder |
+<!-- day 10 self reloading counter -->
