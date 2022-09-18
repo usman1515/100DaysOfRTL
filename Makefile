@@ -9,6 +9,13 @@
 
 # default:
 
+compile_day09:
+	@ echo " "
+	@ echo ---------------------------- Compiling Day 9 RTL ---------------------------
+	@ bash ${100DaysOfRTL_ROOT}/scripts/sim_day09.sh
+	@ echo ----------------------------------- DONE -----------------------------------
+	@ echo " "
+
 compile_day08:
 	@ echo " "
 	@ echo ---------------------------- Compiling Day 8 RTL ---------------------------
