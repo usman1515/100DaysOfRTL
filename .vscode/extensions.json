@@ -1,8 +1,13 @@
 {
     "recommendations": [
-        "oderwat.indent-rainbow",
         "aaron-bond.better-comments",
-        "mshr-h.systemverilog",
+        "streetsidesoftware.code-spell-checker",
+        "mhutchie.git-graph",
+        "oderwat.indent-rainbow",
+        "bierner.markdown-preview-github-styles",
+        "bierner.markdown-shiki",
+        "esbenp.prettier-vscode",
+        "kevinrose.vsc-python-indent",
         "mshr-h.veriloghdl"
     ]
 }
