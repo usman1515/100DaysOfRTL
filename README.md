@@ -1,17 +1,13 @@
 # 100DaysOfRTL
 
-This repo is simply a challenge as part of the #100DaysOfCode to improve my RTL design skills. It will consist of various RTL designs, cover different SystemVerilog language features, design UVM testbenches and maybe even SystemVerilog assertions. 
-
-This idea was inspired from Rahul B. [LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:6941643220841828352/).
-
-I will try my best to use FOSS and toolchains as much as I can for code compilation and simulation.
+This repo is simply a challenge as part of the #100DaysOfCode to improve my RTL design skills. It consists of various RTL designs, cover various SystemVerilog language features. All the IP blocks can be simulated and synthesized using free and open source tools.
 
 ## How to Setup (Linux Ubuntu/Debian)
--   For compiling and simulating the verilog code [Icarus Verilog](https://github.com/steveicarus/iverilog) is required. To install iverilog simply run the following command:
+-   For compiling and simulating the verilog code [Icarus Verilog](https://github.com/steveicarus/iverilog) is required. To install iverilog on Linux/Ubuntu simply run the following command:
     ```bash
     make install_iverilog
     ```
--   For synthesizing the verilog code and generating netlists [Yosys](https://github.com/YosysHQ/yosys) is required. To install yosys simply run the following command:
+-   For synthesizing the verilog code and generating netlists [Yosys](https://github.com/YosysHQ/yosys) is required. To install yosys on Linux/Ubuntu simply run the following command:
     ```bash
     make install_yosys
     ```
@@ -22,25 +18,30 @@ I will try my best to use FOSS and toolchains as much as I can for code compilat
 
 ## How to Run
 Simply use the makefile to compile and simulate the code of any particular day.
--   To simulate code of a particular day:
+-   To simulate a verilog IP testbench:
     ```bash
-    make compile_dayX   # here X=(01-100) e.g. compile_day01 - compile_day100
+    make compile ip=<folder_name>
+    ```
+-   To synthesize a verilog IP netlist:
+    ```bash
+    make synth ip=<folder_name>
     ```
 -   To clean dump files from all folders:
     ```bash
-    make clean_all
+    make clean
     ```
 
 ## Repository Contents
-| Folder | Module                                          |
-| :----: | :---------------------------------------------- |
-| day01  | N-bit width 2x1 mux                             |
-| day02  | D flip flop with no, sync and async rst         |
-| day03  | edge detector                                   |
-| day04  | 8-bit 16 mode ALU                               |
-| day05  | N-bit width odd, even counter                   |
-| day06  | shift reg - siso, sipo, piso, pipo              |
-| day07  | linear shift feedback reg (LSFB)                |
-| day08  | N-bit width bin to one hot encoder              |
-| day09  | N-bit width bin to gray and gray to bin encoder |
-<!-- day 10 self reloading counter -->
+| Folder              | Module                                          |
+| :------------------ | :---------------------------------------------- |
+| 01_mux              | N-bit width 2x1 mux                             |
+| 02_dff              | D flip flop with no, sync and async rst         |
+| 03_edge_detector    | edge detector                                   |
+| 04_alu              | 8-bit 16 mode ALU                               |
+| 05_odd_even_counter | N-bit width odd, even counter                   |
+| 06_shift_reg        | shift reg - siso, sipo, piso, pipo              |
+| 07_lfsr             | linear shift feedback reg (LSFB)                |
+| 08_one_hot_encoder  | N-bit width bin to one hot encoder              |
+| 09_gray_bin_encoder | N-bit width bin to gray and gray to bin encoder |
+| 10_clk_divider      | Clock divider with multipler 2, 4, 8            |
+<!-- day 10 self reloading counter -->  
