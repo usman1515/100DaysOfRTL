@@ -20,7 +20,7 @@ This repo is simply a challenge as part of the #100DaysOfCode to improve my RTL 
 Simply use the makefile to compile and simulate the code of any particular day.
 -   To simulate a verilog IP testbench:
     ```bash
-    make compile ip=<folder_name>
+    make sim ip=<folder_name>
     ```
 -   To synthesize a verilog IP netlist:
     ```bash
@@ -32,16 +32,25 @@ Simply use the makefile to compile and simulate the code of any particular day.
     ```
 
 ## Repository Contents
-| Folder              | Module                                          |
-| :------------------ | :---------------------------------------------- |
-| 01_mux              | N-bit width 2x1 mux                             |
-| 02_dff              | D flip flop with no, sync and async rst         |
-| 03_edge_detector    | edge detector                                   |
-| 04_alu              | 8-bit 16 mode ALU                               |
-| 05_odd_even_counter | N-bit width odd, even counter                   |
-| 06_shift_reg        | shift reg - siso, sipo, piso, pipo              |
-| 07_lfsr             | linear shift feedback reg (LSFB)                |
-| 08_one_hot_encoder  | N-bit width bin to one hot encoder              |
-| 09_gray_bin_encoder | N-bit width bin to gray and gray to bin encoder |
-| 10_clk_divider      | Clock divider with multipler 2, 4, 8            |
-<!-- day 10 self reloading counter -->  
+| Folder                        | Module                                          |
+| :---------------------------- | :---------------------------------------------- |
+| 01_mux                        | N-bit width 2x1 mux                             |
+| 02_dff                        | D flip flop with no, sync and async rst         |
+| 03_edge_detector              | edge detector                                   |
+| 04_alu                        | 8-bit 16 mode ALU                               |
+| 05_odd_even_counter           | N-bit width odd, even counter                   |
+| 06_shift_reg                  | shift reg - siso, sipo, piso, pipo              |
+| 07_lfsr                       | linear shift feedback reg (LSFB)                |
+| 08_one_hot_encoder            | N-bit width bin to one hot encoder              |
+| 09_gray_bin_encoder           | N-bit width bin to gray and gray to bin encoder |
+| 10_clk_divider                | Clock divider with multipler 2, 4, 8            |
+
+| 11_self_reloading_counter     | RTL Self Reloading Counter                      |
+| 12_parallel_to_serial_shifter | RTL Parallel to serial shifter                  |
+| 13_seq_detector               | RTL Sequence detector                           |
+| 14_priority_arbiter           | RTL Fixed Priority Arbiter                      |
+| 15_round_robin_arbiter        | RTL Round Robin Arbiter                         |
+
+
+
+| 13_  RTL Ways to implement Mux
