@@ -26,7 +26,7 @@ module tb_gray_bin_encoders();
     end
 
     initial begin
-        $dumpfile("day09/day09.vcd");
+        $dumpfile("09_gray_bin_encoder/09_gray_bin_encoder.vcd");
         $dumpvars(0,tb_gray_bin_encoders);
     end
 

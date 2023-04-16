@@ -27,7 +27,7 @@ module tb_mux2x1();
     end
 
     initial begin
-        $dumpfile("day01/day01.vcd");
+        $dumpfile("01_mux/01_mux.vcd");
         $dumpvars(0,tb_mux2x1);
     end
 

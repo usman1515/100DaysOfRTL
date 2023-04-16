@@ -32,7 +32,7 @@ module tb_alu ();
     end
 
     initial begin
-        $dumpfile("day04/day04.vcd");
+        $dumpfile("04_alu/04_alu.vcd");
         $dumpvars(0,tb_alu);
     end
 

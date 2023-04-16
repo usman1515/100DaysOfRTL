@@ -38,7 +38,7 @@ module tb_counter();
     end
 
     initial begin
-        $dumpfile("day05/day05.vcd");
+        $dumpfile("05_odd_even_counter/05_odd_even_counter.vcd");
         $dumpvars(0,tb_counter);
     end
 

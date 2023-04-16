@@ -37,7 +37,7 @@ module tb_clock_divider();
     end
 
     initial begin
-        $dumpfile("day10/day10.vcd");
+        $dumpfile("10_clk_divider/10_clk_divider.vcd");
         $dumpvars(0,tb_clock_divider);
     end
 

@@ -37,7 +37,7 @@ module tb_dFlipFlop ();
     end
 
     initial begin
-        $dumpfile("day02/day02.vcd");
+        $dumpfile("02_dff/02_dff.vcd");
         $dumpvars(0,tb_dFlipFlop);
     end
 

@@ -23,7 +23,7 @@ module tb_lfsr();
             rst_n <= 1'b1;
         @(posedge clk)
             rst_n <= 1'b0;
-        
+
         repeat(10) begin
             @(posedge clk);
             $display("| Time: %3d | Reset_n: %b | OutData: %b |",$time, rst_n, out_data);
@@ -32,7 +32,7 @@ module tb_lfsr();
     end
 
     initial begin
-        $dumpfile("day07/day07.vcd");
+        $dumpfile("07_lfsr/07_lfsr.vcd");
         $dumpvars(0,tb_lfsr);
     end
 
