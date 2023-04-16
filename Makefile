@@ -157,12 +157,13 @@ install_yosys:
 clean:
 	@ echo " "
 	@ echo -------------------------- Cleaning all dump files -------------------------
-	@ rm -rfv day*/*.ys \
-	day*/*.vcd \
-	day*/*.vvp \
-	day*/*.json	\
-	day*/*.v \
-	day*/*.dot \
-	day*/*.svg
+	@ rm -rfv \
+	*/*.ys \
+	*/*.vcd \
+	*/*.vvp \
+	*/*.json \
+	*/*.v \
+	*/*.dot \
+	*/*.svg
 	@ echo ----------------------------------- DONE -----------------------------------
 	@ echo " "
