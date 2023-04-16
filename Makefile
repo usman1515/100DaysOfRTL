@@ -5,6 +5,14 @@
 # ============================================================================= PARAMETERS
 # =======================================================================================
 
+ifeq ($(ip),11_self_reloading_counter)
+FILE_RTL_TOP	= self_reloading_counter
+FILE_TB_TOP		= tb_self_reloading_counter
+FILE_VVP		= self_reloading_counter
+FILE_YOSYS		= yosys_11_self_reloading_counter_synth
+FILE_NETLIST	= netlist_self_reloading_counter
+PATH_YOSYS_FILE	= ${ip}/${FILE_YOSYS}.ys
+endif
 ifeq ($(ip),10_clk_divider)
 FILE_RTL_TOP	= clock_divider
 FILE_TB_TOP		= tb_clock_divider
