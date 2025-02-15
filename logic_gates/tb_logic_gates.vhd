@@ -1,67 +1,79 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+-- use std.textio.all;
+
+library vunit_lib;
+context vunit_lib.vunit_context;
+
 
 entity tb_logic_gates is
+    generic (runner_cfg : string);      -- vunit runner
 end entity tb_logic_gates;
 
 architecture behaviour of tb_logic_gates is
-    -- declare IO signals for DUT
-    signal in_sigA         : std_logic := '0';
-    signal in_sigB         : std_logic := '0';
-    signal out_sig_notA    : std_logic;
-    signal out_sig_notB    : std_logic;
-    signal out_sig_andC    : std_logic;
-    signal out_sig_orC     : std_logic;
-    signal out_sig_xorC    : std_logic;
-    signal out_sig_nandC   : std_logic;
-    signal out_sig_norC    : std_logic;
-    signal out_sig_xnorC   : std_logic;
 
-    -- declare DUT
-    component logic_gates is
-        port(
-            in_dataA    : in std_logic;
-            in_dataB    : in std_logic;
-            out_notA    : out std_logic;
-            out_notB    : out std_logic;
-            out_andC    : out std_logic;
-            out_orC     : out std_logic;
-            out_xorC    : out std_logic;
-            out_nandC   : out std_logic;
-            out_norC    : out std_logic;
-            out_xnorC   : out std_logic
-        );
-    end component logic_gates;
+    -- declare IO signals for DUT
+    signal in_sigA          : std_logic := '0';
+    signal in_sigB          : std_logic := '0';
+    signal out_sig_notA     : std_logic;
+    signal out_sig_notB     : std_logic;
+    signal out_sig_and      : std_logic;
+    signal out_sig_or       : std_logic;
+    signal out_sig_xor      : std_logic;
+    signal out_sig_nand     : std_logic;
+    signal out_sig_nor      : std_logic;
+    signal out_sig_xnor     : std_logic;
 
 begin
     -- instantiate DUT and map ports
-    INST_logic_gates : logic_gates
+    INST_logic_gates : entity work.logic_gates
+    -- generic map ();
     port map (
-        in_dataA    => in_sigA,
-        in_dataB    => in_sigB,
-        out_notA    => out_sig_notA,
-        out_notB    => out_sig_notB,
-        out_andC    => out_sig_andC,
-        out_orC     => out_sig_orC,
-        out_xorC    => out_sig_xorC,
-        out_nandC   => out_sig_nandC,
-        out_norC    => out_sig_norC,
-        out_xnorC   => out_sig_xnorC
+        i_dataA     => in_sigA,
+        i_dataB     => in_sigB,
+        o_data_notA => out_sig_notA,
+        o_data_notB => out_sig_notB,
+        o_data_and  => out_sig_and,
+        o_data_nand => out_sig_or,
+        o_data_or   => out_sig_xor,
+        o_data_nor  => out_sig_nand,
+        o_data_xor  => out_sig_nor,
+        o_data_xnor => out_sig_xnor
     );
 
     -- provide stimulii to the ports and observe outputs
-    process is
-        begin
-            wait for 10 ns;
-            in_sigA <= '0'; in_sigB <= '0';
-            wait for 10 ns;
-            in_sigA <= '0'; in_sigB <= '1';
-            wait for 10 ns;
-            in_sigA <= '1'; in_sigB <= '0';
-            wait for 10 ns;
-            in_sigA <= '1'; in_sigB <= '1';
-            wait for 10 ns;
-    end process;
+    main_tb : process is
+    begin
+        -- initialize test runner
+        test_runner_setup(runner, runner_cfg);
+
+        -- start simulation
+        report "begin simulation" severity note;
+        wait for 10 ns;
+        in_sigA <= '0'; in_sigB <= '0';
+
+        wait for 10 ns;
+        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
+        in_sigA <= '0'; in_sigB <= '1';
+        
+        wait for 10 ns;
+        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
+        in_sigA <= '1'; in_sigB <= '0';
+        
+        wait for 10 ns;
+        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
+        in_sigA <= '1'; in_sigB <= '1';
+        
+        wait for 10 ns;
+        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
+        report "end simulation" severity note;
+
+        -- end test runner
+        test_runner_cleanup(runner);
+        -- finish the simulation
+        wait;
+    end process main_tb;
 
 end architecture behaviour;
+
