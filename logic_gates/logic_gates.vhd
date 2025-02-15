@@ -3,33 +3,34 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity logic_gates is
-    -- declare parameters
-    -- generic();
-    -- declare ports
-    port(
-        in_dataA    : in std_logic;
-        in_dataB    : in std_logic;
-        out_notA    : out std_logic;
-        out_notB    : out std_logic;
-        out_andC    : out std_logic;
-        out_nandC   : out std_logic;
-        out_orC     : out std_logic;
-        out_norC    : out std_logic;
-        out_xorC    : out std_logic;
-        out_xnorC   : out std_logic
+    port (
+        -- input ports
+        i_dataA     : in std_logic;
+        i_dataB     : in std_logic;
+        -- output ports
+        o_data_notA : out std_logic;
+        o_data_notB : out std_logic;
+        o_data_and  : out std_logic;
+        o_data_nand : out std_logic;
+        o_data_or   : out std_logic;
+        o_data_nor  : out std_logic;
+        o_data_xor  : out std_logic;
+        o_data_xnor : out std_logic
     );
 end entity logic_gates;
 
 architecture rtl of logic_gates is
-    -- declare wires and reg here
+    -- constants
+    -- signals
 begin
-    -- create rtl here
-    out_notA    <= not in_dataA;
-    out_notB    <= not in_dataB;
-    out_andC    <= in_dataA and in_dataB;
-    out_nandC   <= in_dataA nand in_dataB;
-    out_orC     <= in_dataA or in_dataB;
-    out_norC    <= in_dataA nor in_dataB;
-    out_xorC    <= in_dataA xor in_dataB;
-    out_xnorC   <= in_dataA xnor in_dataB;
+
+    o_data_notA <= not i_dataA;
+    o_data_notB <= not i_dataB;
+    o_data_and  <= i_dataA and i_dataB;
+    o_data_nand <= i_dataA nand i_dataB;
+    o_data_or   <= i_dataA or i_dataB;
+    o_data_nor  <= i_dataA nor i_dataB;
+    o_data_xor  <= i_dataA xor i_dataB;
+    o_data_xnor <= i_dataA xnor i_dataB;
+
 end architecture rtl;
