@@ -4,40 +4,39 @@ module tb_logic_gates;
 
     localparam T = 10;
 
-    reg     in_dataA;
-    reg     in_dataB;
-    reg     out_notA;
-    reg     out_notB;
-    reg     out_andC;
-    reg     out_orC;
-    reg     out_xorC;
-    reg     out_nandC;
-    wire    out_norC;
-    wire    out_xnorC;
+    logic   i_dataA;
+    logic   i_dataB;
+    logic   o_data_notA;
+    logic   o_data_notB;
+    logic   o_data_and;
+    logic   o_data_or;
+    logic   o_data_xor;
+    logic   o_data_nand;
+    logic   o_data_nor;
+    logic   o_data_xnor;
 
     logic_gates dut_logic_gates (
-        .in_dataA(in_dataA),
-        .in_dataB(in_dataB),
-        .out_notA(out_notA),
-        .out_notB(out_notB),
-        .out_andC(out_andC),
-        .out_orC(out_orC),
-        .out_xorC(out_xorC),
-        .out_nandC(out_nandC),
-        .out_norC(out_norC),
-        .out_xnorC(out_xnorC)
+        .i_dataA(i_dataA),
+        .i_dataB(i_dataB),
+        .o_data_notA(o_data_notA),
+        .o_data_notB(o_data_notB),
+        .o_data_and(o_data_and),
+        .o_data_or(o_data_or),
+        .o_data_xor(o_data_xor),
+        .o_data_nand(o_data_nand),
+        .o_data_nor(o_data_nor),
+        .o_data_xnor(o_data_xnor)
     );
 
     initial begin
         repeat(10) begin
-            in_dataA = $urandom_range(0, 1);
-            in_dataB = $urandom_range(0, 1);
+            i_dataA = $urandom_range(0, 1);
+            i_dataB = $urandom_range(0, 1);
             #T;
-            $display("| in_dataA: %b | in_dataB:  %b |", in_dataA, in_dataB);
-            $display("| out_notA: %b | out_andC:  %b | out_orC:  %b | out_xorC:  %b |",
-                        out_notA, out_andC, out_orC, out_xorC);
-            $display("| out_notB: %b | out_nandC: %b | out_norC: %b | out_nxorC: %b |\n",
-                        out_notB, out_nandC, out_norC, out_xnorC);
+            $display("| A: %b | B: %b |", i_dataA, i_dataB,
+                "| notA: %b | notB: %b |", o_data_notA, o_data_notB,
+                "| and:  %b | or:   %b | xor:  %b |", o_data_and, o_data_or, o_data_xor,
+                "| nand: %b | nor:  %b | xnor: %b |", o_data_nand, o_data_nor, o_data_xnor);
         end
 
         $finish;
