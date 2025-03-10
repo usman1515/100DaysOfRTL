@@ -1,78 +1,87 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
--- use std.textio.all;
-
-library vunit_lib;
-context vunit_lib.vunit_context;
+use IEEE.math_real.uniform;
 
 
 entity tb_logic_gates is
-    generic (runner_cfg : string);      -- vunit runner
 end entity tb_logic_gates;
 
 architecture behaviour of tb_logic_gates is
 
+    -- constants
+    constant T : time := 1 ns;
+
     -- declare IO signals for DUT
-    signal in_sigA          : std_logic := '0';
-    signal in_sigB          : std_logic := '0';
-    signal out_sig_notA     : std_logic;
-    signal out_sig_notB     : std_logic;
-    signal out_sig_and      : std_logic;
-    signal out_sig_or       : std_logic;
-    signal out_sig_xor      : std_logic;
-    signal out_sig_nand     : std_logic;
-    signal out_sig_nor      : std_logic;
-    signal out_sig_xnor     : std_logic;
+    signal i_sigA          : std_logic := '0';
+    signal i_sigB          : std_logic := '0';
+    signal o_sig_notA     : std_logic;
+    signal o_sig_notB     : std_logic;
+    signal o_sig_and      : std_logic;
+    signal o_sig_or       : std_logic;
+    signal o_sig_xor      : std_logic;
+    signal o_sig_nand     : std_logic;
+    signal o_sig_nor      : std_logic;
+    signal o_sig_xnor     : std_logic;
 
 begin
     -- instantiate DUT and map ports
     INST_logic_gates : entity work.logic_gates
     -- generic map ();
     port map (
-        i_dataA     => in_sigA,
-        i_dataB     => in_sigB,
-        o_data_notA => out_sig_notA,
-        o_data_notB => out_sig_notB,
-        o_data_and  => out_sig_and,
-        o_data_nand => out_sig_or,
-        o_data_or   => out_sig_xor,
-        o_data_nor  => out_sig_nand,
-        o_data_xor  => out_sig_nor,
-        o_data_xnor => out_sig_xnor
+        i_dataA     => i_sigA,
+        i_dataB     => i_sigB,
+        o_data_notA => o_sig_notA,
+        o_data_notB => o_sig_notB,
+        o_data_and  => o_sig_and,
+        o_data_nand => o_sig_or,
+        o_data_or   => o_sig_xor,
+        o_data_nor  => o_sig_nand,
+        o_data_xor  => o_sig_nor,
+        o_data_xnor => o_sig_xnor
     );
 
     -- provide stimulii to the ports and observe outputs
     main_tb : process is
+        -- generate random numbers
+        variable seed_min, seed_max : positive := 1;
+        variable rand_num : real;
+        variable rand_int : integer;
+
     begin
-        -- initialize test runner
-        test_runner_setup(runner, runner_cfg);
 
-        -- start simulation
         report "begin simulation" severity note;
-        wait for 10 ns;
-        in_sigA <= '0'; in_sigB <= '0';
 
-        wait for 10 ns;
-        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
-        in_sigA <= '0'; in_sigB <= '1';
-        
-        wait for 10 ns;
-        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
-        in_sigA <= '1'; in_sigB <= '0';
-        
-        wait for 10 ns;
-        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
-        in_sigA <= '1'; in_sigB <= '1';
-        
-        wait for 10 ns;
-        report "| in_sigA: " & std_logic'image(in_sigA) & "| in_sigB: " & std_logic'image(in_sigB);
+        for i in 1 to 19 loop
+            -- assign random value to input signals
+            uniform(seed_min, seed_max, rand_num);  -- generate rand num [0,1]
+            rand_int := integer(rand_num * 2.0);    -- convert value to integer
+            i_sigA <= '0' when rand_int = 0 else '1';
+
+            uniform(seed_min, seed_max, rand_num);  -- generate rand num [0,1]
+            rand_int := integer(rand_num * 2.0);    -- convert value to integer
+            i_sigB <= '1' when rand_int = 0 else '1';
+
+            -- print outputs
+            report "| Time: " & integer'image(now / 1 ns) & " ns"
+            & "| sigA: " & std_logic'image(i_sigA)
+            & "| sigB: " & std_logic'image(i_sigB)
+            & "| notA: " & std_logic'image(o_sig_notA)
+            & "| notB: " & std_logic'image(o_sig_notB)
+            & "| and: " & std_logic'image(o_sig_and)
+            & "| or: " & std_logic'image(o_sig_or)
+            & "| xor: " & std_logic'image(o_sig_xor)
+            & "| nand: " & std_logic'image(o_sig_nand)
+            & "| nor: " & std_logic'image(o_sig_nor)
+            & "| xnor: " & std_logic'image(o_sig_xnor);
+
+            wait for T;
+        end loop;
+
         report "end simulation" severity note;
 
-        -- end test runner
-        test_runner_cleanup(runner);
         -- finish the simulation
-        wait;
+        std.env.stop;
     end process main_tb;
 
 end architecture behaviour;
