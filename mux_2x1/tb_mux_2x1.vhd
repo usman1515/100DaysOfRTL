@@ -33,8 +33,10 @@ begin
     );
 
     -- give stimulii to input and observe outputs
-    testbench: process is
+    main_tb_loop: process is
     begin
+        report "begin simulation" severity note;
+
         wait for T; i_dataA <= x"aa"; i_dataB <= x"ff"; i_sel <='0';
         wait for T; i_dataA <= x"bb"; i_dataB <= x"ee"; i_sel <='1';
         wait for T; i_dataA <= x"cc"; i_dataB <= x"dd"; i_sel <='0';
@@ -42,6 +44,12 @@ begin
         wait for T; i_dataA <= x"ee"; i_dataB <= x"bb"; i_sel <='0';
         wait for T; i_dataA <= x"ff"; i_dataB <= x"aa"; i_sel <='1';
         wait for T;
-    end process testbench;
+
+        report "end simulation" severity note;
+
+        -- finish the simulation
+        std.env.stop;
+    end process main_tb_loop;
 
 end architecture behavioural;
+
