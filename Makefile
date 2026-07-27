@@ -123,7 +123,18 @@ sim_ghdl:
 	ghdl -e $(FLAGS_GHDL) tb_$(ip)
 	ghdl -r $(FLAGS_GHDL) tb_$(ip) --vcd=$(DIR_TB)/$(tb_top_module).vcd --stop-time=$(end_sim)
 
-clean:
+sim_nvc:
+	@ echo " "
+	@ mkdir -p $(DIR_TB)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	nvc $(FLAGS_NVC) -a $(ip)/$(ip).vhd
+	nvc $(FLAGS_NVC) -a $(ip)/$(tb_top_module).vhd
+	nvc $(FLAGS_NVC) -e tb_$(ip)
+	nvc $(FLAGS_NVC) -r tb_$(ip) --wave=$(DIR_TB)/$(tb_top_module).vcd --format=vcd \
+		--dump-arrays --stop-time=$(end_sim) --exit-severity=error
+
 sim_iverilog:
 	@ echo " "
 	@ mkdir -p $(DIR_TB)
