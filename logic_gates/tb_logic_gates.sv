@@ -42,9 +42,12 @@ module tb_logic_gates;
         $finish;
     end
 
-    initial begin
-        $dumpfile("tb_logic_gates.vcd");
-        $dumpvars(0,tb_logic_gates);
-    end
+    `ifdef XSIM_CLI_VCD_WAVEDUMP
+        initial begin
+            $dumpfile("./bin/tb/tb_logic_gates.vcd");
+            $dumpvars(0,tb_logic_gates);
+        end
+    `endif
 
 endmodule
+
