@@ -83,27 +83,25 @@ sim_xsim_rtl_sv_tb_vhdl:
 	xsim behav_$(tb_top_module) -runall -ieeewarnings \
 		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
-	@ echo "memory -nomap; opt_clean"			>> $(path_yosys_file)
-	@ echo "# ----- fine synthesis"				>> $(path_yosys_file)
-	@ echo "opt -fast -full" 					>> $(path_yosys_file)
-	@ echo "memory_map; opt -full" 				>> $(path_yosys_file)
-	@ echo "techmap; opt -fast" 				>> $(path_yosys_file)
-	@ echo "abc -fast; opt -fast" 				>> $(path_yosys_file)
-	@ echo "# ----- check"						>> $(path_yosys_file)
-	@ echo "clean" 								>> $(path_yosys_file)
-	@ echo "# ----- write netlist as verilog"			>> $(path_yosys_file)
-	@ echo "write_verilog $(ip)/$(file_netlist).v"		>> $(path_yosys_file)
-	@ echo "# ----- write netlist to new json file"		>> $(path_yosys_file)
-	@ echo "json -aig -o $(ip)/$(file_netlist).json" 	>> $(path_yosys_file)
-	@ echo "# ----- display stats"						>> $(path_yosys_file)
-	@ echo "stat -tech cmos -width"						>> $(path_yosys_file)
-	@ echo "# ----- display design netlist using svg"	>> $(path_yosys_file)
-	@ echo "show -format svg -viewer eog -stretch -width \
-		-colors 10000 -signed -prefix $(ip)/$(rtl_top)" >> $(path_yosys_file)
-	@ echo ----- running yosys
-	@ yosys $(path_yosys_file)
-	@ echo ------------------------------------ DONE ------------------------------------
+sim_xsim_rtl_sv_tb_sv:
 	@ echo " "
+	@ mkdir -p $(DIR_TB) $(DIR_COV)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	@ echo -e ${GREEN}reading all RTL files${NC}
+	xvlog -lib $(mylib) -work $(worklib) -incr -sv -v 0 ./$(ip)/$(ip).sv
+	@ echo -e ${GREEN}reading all TB files${NC}
+	xvlog -lib $(mylib) -work $(worklib) -incr -sv -v 0 -uvm_version $(UVM_VER) \
+		--define $(TB_SV_DEF) ./$(ip)/$(tb_top_module).sv
+	@ echo -e ${GREEN}elaborating the design${NC}
+	xelab -lib $(mylib) --snapshot behav_$(tb_top_module) -O2 -v 0 -incr --mt 8 -stats -debug all \
+		-cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) --cc_type sbct \
+		-log $(DIR_TB)/elab_$(tb_top_module).log $(tb_top_module)
+	@ echo -e ${GREEN}simulating the design${NC}
+	xsim behav_$(tb_top_module) -runall -ieeewarnings \
+		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
+
 
 clean:
 	@ echo " "
