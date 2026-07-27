@@ -124,15 +124,16 @@ sim_ghdl:
 	ghdl -r $(FLAGS_GHDL) tb_$(ip) --vcd=$(DIR_TB)/$(tb_top_module).vcd --stop-time=$(end_sim)
 
 clean:
+sim_iverilog:
 	@ echo " "
-	@ echo -------------------------- Cleaning all dump files -------------------------
-	@ rm -rfv \
-	*/*.ys \
-	*/*.vcd \
-	*/*.vvp \
-	*/*.json \
-	*/*.v \
-	*/*.dot \
+	@ mkdir -p $(DIR_TB)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	iverilog $(FLAGS_IVERILOG) -D $(TB_SV_DEF) $(ip)/$(ip).sv $(ip)/$(tb_top_module).sv \
+		-o $(DIR_TB)/$(vvp).vvp
+	vvp $(DIR_TB)/$(vvp).vvp
+
 	*/*.svg \
 	*/*.cf
 	@ echo ----------------------------------- DONE -----------------------------------
