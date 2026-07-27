@@ -102,6 +102,16 @@ sim_xsim_rtl_sv_tb_sv:
 	xsim behav_$(tb_top_module) -runall -ieeewarnings \
 		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
+cov_xrcg:
+	@ echo " "
+	@ mkdir -p $(DIR_TB) $(DIR_COV)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Generating code coverage report: ${ip}${NC}
+	@ echo -e "========================================================"
+	@ mkdir -p $(DIR_COV)/${tb_top_module}
+	xcrg -cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) \
+		-report_dir $(DIR_COV)/${tb_top_module} -report_format html
+
 
 clean:
 	@ echo " "
