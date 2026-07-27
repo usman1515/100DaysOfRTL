@@ -112,6 +112,16 @@ cov_xrcg:
 	xcrg -cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) \
 		-report_dir $(DIR_COV)/${tb_top_module} -report_format html
 
+sim_ghdl:
+	@ echo " "
+	@ mkdir -p $(DIR_TB)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	ghdl -a $(FLAGS_GHDL) $(ip)/$(ip).vhd
+	ghdl -a $(FLAGS_GHDL) $(ip)/$(tb_top_module).vhd
+	ghdl -e $(FLAGS_GHDL) tb_$(ip)
+	ghdl -r $(FLAGS_GHDL) tb_$(ip) --vcd=$(DIR_TB)/$(tb_top_module).vcd --stop-time=$(end_sim)
 
 clean:
 	@ echo " "
