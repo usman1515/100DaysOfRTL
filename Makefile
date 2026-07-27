@@ -1,31 +1,48 @@
 # 100DaysOfRTL Root
-100DaysOfRTL_ROOT = $(realpath .)
+PRJ_DIR = $(realpath .)
 
 
 # ============================================================================= ARGS
-ip :=
 
-# ---------------------------------------- GHDL
-# FLAGS_GHDL	:= --std=87
-FLAGS_GHDL	+= --std=93
-# FLAGS_GHDL	:= --std=02
-# FLAGS_GHDL	:= --std=08
-# FLAGS_GHDL	:= --std=19
-FLAGS_GHDL	+= -fexplicit -frelaxed-rules --syn-binding
+ip :=
+tb_top_module := tb_$(ip)
+
+# ------------------------------------------------- xsim
+UVM_VER := 1.2
+TB_SV_DEF := XSIM_CLI_VCD_WAVEDUMP
+
+# ------------------------------------------------- ghdl
+# FLAGS_GHDL  := --std=87
+# FLAGS_GHDL  := --std=93
+# FLAGS_GHDL  := --std=02
+FLAGS_GHDL  := --std=08
+# FLAGS_GHDL  := --std=19
+FLAGS_GHDL  += -fexplicit -frelaxed-rules --syn-binding
 wave 		:= tb_$(ip)
 end_sim 	:= 100ns
 
-# ---------------------------------------- IVERILOG
-FLAGS_IVERILOG	+= -Wall -Winfloop -gno-shared-loop-index -g2012
-vvp 			:= tb_$(ip)
+# ------------------------------------------------- nvc
+# FLAGS_NVC  := --std=87
+# FLAGS_NVC  := --std=93
+# FLAGS_NVC  := --std=02
+FLAGS_NVC  := --std=08
+# FLAGS_NVC  := --std=2019
 
-# ---------------------------------------- YOSYS
-file_yosys		:= yosys_$(ip)
-file_netlist	:= netlist_$(ip)
-rtl_top			:= $(ip)
-path_yosys_file	:= $(ip)/$(file_yosys).ys
+# ------------------------------------------------- iverilog
+FLAGS_IVERILOG  += -Wall -Winfloop -gno-shared-loop-index -g2012
+vvp             := $(tb_top_module)
 
-# ============================================================================= TARGETS
+
+# ============================================================================= PATHS
+DIR_TB := $(PRJ_DIR)/bin/tb
+DIR_COV := $(PRJ_DIR)/bin/cov
+
+# ============================================================================= colors
+GREEN='\033[1;32m'
+NC='\033[0m'
+worklib="work"
+mylib="xdefault_lib"
+
 
 # ============================================================================= targets
 sim_xsim_rtl_vhdl_tb_vhdl:
@@ -121,7 +138,7 @@ sim_ghdl:
 	ghdl -a $(FLAGS_GHDL) $(ip)/$(ip).vhd
 	ghdl -a $(FLAGS_GHDL) $(ip)/$(tb_top_module).vhd
 	ghdl -e $(FLAGS_GHDL) tb_$(ip)
-	ghdl -r $(FLAGS_GHDL) tb_$(ip) --vcd=$(DIR_TB)/$(tb_top_module).vcd --stop-time=$(end_sim)
+	ghdl -r $(FLAGS_GHDL) tb_$(ip) --vcd=$(DIR_TB)/$(wave).vcd --stop-time=$(end_sim)
 
 sim_nvc:
 	@ echo " "
@@ -132,7 +149,7 @@ sim_nvc:
 	nvc $(FLAGS_NVC) -a $(ip)/$(ip).vhd
 	nvc $(FLAGS_NVC) -a $(ip)/$(tb_top_module).vhd
 	nvc $(FLAGS_NVC) -e tb_$(ip)
-	nvc $(FLAGS_NVC) -r tb_$(ip) --wave=$(DIR_TB)/$(tb_top_module).vcd --format=vcd \
+	nvc $(FLAGS_NVC) -r tb_$(ip) --wave=$(DIR_TB)/$(wave).vcd --format=vcd \
 		--dump-arrays --stop-time=$(end_sim) --exit-severity=error
 
 sim_iverilog:
@@ -145,7 +162,11 @@ sim_iverilog:
 		-o $(DIR_TB)/$(vvp).vvp
 	vvp $(DIR_TB)/$(vvp).vvp
 
-	*/*.svg \
-	*/*.cf
-	@ echo ----------------------------------- DONE -----------------------------------
-	@ echo " "
+
+
+
+clean:
+	rm -rf *.log *.pb *.jou *.vcd
+	rm -rf $(DIR_TB) $(DIR_COV)
+	rm -rf ./xsim.dir
+	rm -rf *.cf
