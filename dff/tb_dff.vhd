@@ -53,11 +53,19 @@ begin
     -- create and provide stimulli to inputs
     testbench : process is
     begin
+        report "begin simulation" severity note;
         wait for T; rst_n <= '1';
         wait for T; in_data <= x"aa";
         wait for T; rst_n <= '0';
-        wait for T; in_data <= x"bb";
-    end process testbench;
+        wait for T; in_data <= x"55";
+        wait for T; rst_n <= '1';
+        wait for T; in_data <= x"55";
+        wait for T; rst_n <= '0';
+        wait for T; in_data <= x"aa";
+        report "end simulation" severity note;
 
+        -- finish the simulation
+        std.env.stop;
+    end process testbench;
 
 end architecture behaviour;
