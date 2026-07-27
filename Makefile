@@ -65,24 +65,24 @@ sim_xsim_rtl_vhdl_tb_sv:
 	xsim behav_$(tb_top_module) -runall -ieeewarnings \
 		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
-synth:
+sim_xsim_rtl_sv_tb_vhdl:
 	@ echo " "
-	@ echo ---------------------- Synthesizing $(ip) RTL ---------------------
-	@ touch $(ip)/$(file_yosys).ys
-	@ echo "# ----- reading design file"		>> $(path_yosys_file)
-	@ echo "read -sv $(ip)/$(rtl_top).sv"		>> $(path_yosys_file)
-	@ echo "# ----- elaborate design hierarchy"	>> $(path_yosys_file)
-	@ echo "hierarchy -check -auto-top"			>> $(path_yosys_file)
-	@ echo "# ----- coarse synthesis"			>> $(path_yosys_file)
-	@ echo "flatten" 							>> $(path_yosys_file)
-	@ echo "proc; opt_expr; opt_clean"			>> $(path_yosys_file)
-	@ echo "check; opt -nodffe -nosdff" 		>> $(path_yosys_file)
-	@ echo "fsm; opt"							>> $(path_yosys_file)
-	@ echo "wreduce"							>> $(path_yosys_file)
-	@ echo "peepopt; opt_clean" 				>> $(path_yosys_file)
-	@ echo "techmap" 							>> $(path_yosys_file)
-	@ echo "alumacc" 							>> $(path_yosys_file)
-	@ echo "share; opt" 						>> $(path_yosys_file)
+	@ mkdir -p $(DIR_TB) $(DIR_COV)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	@ echo -e ${GREEN}reading all RTL files${NC}
+	xvlog -lib $(mylib) -work $(worklib) -incr -sv -v 0 ./$(ip)/$(ip).sv
+	@ echo -e ${GREEN}reading all TB files${NC}
+	xvhdl -lib $(mylib) -work $(worklib) -incr -2008 -v 0 ./$(ip)/$(tb_top_module).vhd
+	@ echo -e ${GREEN}elaborating the design${NC}
+	xelab -lib $(mylib) --snapshot behav_$(tb_top_module) -O2 -v 0 -incr --mt 8 -stats -debug all \
+		-cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) --cc_type sbct \
+		-log $(DIR_TB)/elab_$(tb_top_module).log $(tb_top_module)
+	@ echo -e ${GREEN}simulating the design${NC}
+	xsim behav_$(tb_top_module) -runall -ieeewarnings \
+		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
+
 	@ echo "memory -nomap; opt_clean"			>> $(path_yosys_file)
 	@ echo "# ----- fine synthesis"				>> $(path_yosys_file)
 	@ echo "opt -fast -full" 					>> $(path_yosys_file)
