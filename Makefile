@@ -46,15 +46,24 @@ sim_xsim_rtl_vhdl_tb_vhdl:
 	xsim behav_$(tb_top_module) -runall -ieeewarnings \
 		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
-sim_verilog:
+sim_xsim_rtl_vhdl_tb_sv:
 	@ echo " "
-	@ echo ----------------------- Compiling Verilog ${ip} RTL -----------------------
-	@ cd $(ip); \
-		iverilog $(FLAGS_IVERILOG) $(ip).sv tb_$(ip).sv \
-		-o $(vvp).vvp; \
-		vvp $(vvp).vvp
-	@ echo ------------------------------------ DONE ------------------------------------
-	@ echo " "
+	@ mkdir -p $(DIR_TB) $(DIR_COV)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	@ echo -e ${GREEN}reading all RTL files${NC}
+	xvhdl -lib $(mylib) -work $(worklib) -incr -2008 -v 0 ./$(ip)/$(ip).vhd
+	@ echo -e ${GREEN}reading all TB files${NC}
+	xvlog -lib $(mylib) -work $(worklib) -incr -sv -v 0 -uvm_version $(UVM_VER) \
+		--define $(TB_SV_DEF) ./$(ip)/$(tb_top_module).sv
+	@ echo -e ${GREEN}elaborating the design${NC}
+	xelab -lib $(mylib) --snapshot behav_$(tb_top_module) -O2 -v 0 -incr --mt 8 -stats -debug all \
+		-cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) --cc_type sbct \
+		-log $(DIR_TB)/elab_$(tb_top_module).log $(tb_top_module)
+	@ echo -e ${GREEN}simulating the design${NC}
+	xsim behav_$(tb_top_module) -runall -ieeewarnings \
+		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
 synth:
 	@ echo " "
