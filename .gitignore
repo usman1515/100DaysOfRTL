@@ -1,7 +1,46 @@
 day*/*.ys
-day*/*.vcd
+# day*/*.vcd
 day*/*.vvp
 day*/*.json
 day*/*.v
 day*/*.dot
 day*/*.svg
+
+
+.vscode
+
+# GHDL, NVC, iverilog
+work
+*.out
+
+# vivado projects
+basys3*
+nexys*
+
+# vivado binaries
+.Xil
+-p
+.gen
+.srcs
+xsim.dir
+ip
+*/*.bak
+
+# bitstreams generated
+*.bit
+
+# vivado logs
+*.jou
+*.log
+*.str
+
+# testbench simulation dumps
+*.vcd
+*.wdb
+*.zip
+*.xml
+*.pb
+
+# checkpoints, reports, logs
+bin
+
