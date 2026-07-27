@@ -30,9 +30,10 @@ module tb_mux_2x1;
         $finish;
     end
 
-    initial begin
-        $dumpfile("tb_mux.vcd");
-        $dumpvars(0, tb_mux);
-    end
-
+    `ifdef XSIM_CLI_VCD_WAVEDUMP
+        initial begin
+            $dumpfile("./bin/tb/tb_mux_2x1.vcd");
+            $dumpvars(0, tb_mux_2x1);
+        end
+    `endif
 endmodule
