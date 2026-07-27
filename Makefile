@@ -27,17 +27,24 @@ path_yosys_file	:= $(ip)/$(file_yosys).ys
 
 # ============================================================================= TARGETS
 
-sim_vhdl:
+# ============================================================================= targets
+sim_xsim_rtl_vhdl_tb_vhdl:
 	@ echo " "
-	@ echo -------------------- Compiling VHDL ${ip} RTL -----------------------
-	@ cd $(ip); \
-		ghdl -a $(FLAGS_GHDL) $(ip).vhd; \
-		ghdl -a $(FLAGS_GHDL) tb_$(ip).vhd; \
-		ghdl -e $(FLAGS_GHDL) tb_$(ip); \
-		ghdl -r $(FLAGS_GHDL) tb_$(ip) \
-		--vcd=$(wave).vcd --stop-time=$(end_sim)
-	@ echo ------------------------------------ DONE ------------------------------------
-	@ echo " "
+	@ mkdir -p $(DIR_TB) $(DIR_COV)
+	@ echo -e "\n========================================================"
+	@ echo -e ${GREEN}Processing IP Block: ${ip}${NC}
+	@ echo -e "========================================================"
+	@ echo -e ${GREEN}reading all RTL files${NC}
+	xvhdl -lib $(mylib) -work $(worklib) -incr -2008 -v 0 ./$(ip)/$(ip).vhd
+	@ echo -e ${GREEN}reading all TB files${NC}
+	xvhdl -lib $(mylib) -work $(worklib) -incr -2008 -v 0 ./$(ip)/$(tb_top_module).vhd
+	@ echo -e ${GREEN}elaborating the design${NC}
+	xelab -lib $(mylib) --snapshot behav_$(tb_top_module) -O2 -v 0 -incr --mt 8 -stats -debug all \
+		-cov_db_dir $(DIR_COV) -cov_db_name cov_db_$(tb_top_module) --cc_type sbct \
+		-log $(DIR_TB)/elab_$(tb_top_module).log $(tb_top_module)
+	@ echo -e ${GREEN}simulating the design${NC}
+	xsim behav_$(tb_top_module) -runall -ieeewarnings \
+		-log $(DIR_TB)/sim_$(tb_top_module).log -wdb $(DIR_TB)/wave_db_$(tb_top_module).wdb
 
 sim_verilog:
 	@ echo " "
