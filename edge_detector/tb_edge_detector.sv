@@ -56,9 +56,11 @@ module tb_edge_detector;
         $finish;
     end
 
-    initial begin
-        $dumpfile("tb_edge_detector.vcd");
-        $dumpvars(0, tb_edge_detector);
-    end
+    `ifdef XSIM_CLI_VCD_WAVEDUMP
+        initial begin
+            $dumpfile("./bin/tb/tb_edge_detector.vcd");
+            $dumpvars(0, tb_edge_detector);
+        end
+    `endif
 
 endmodule
