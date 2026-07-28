@@ -1,19 +1,24 @@
 #!/bin/bash
 
-cd ~
+# create dir Tools if it doesnt exist
+[ -d ~/Tools ] || mkdir -p ~/Tools
+cd ~/Tools
 
-# install pre-requisites
-sudo apt install -y build-essential python3 bison flex gawk git tcl-dev graphviz xdot \
-libreadline-dev libffi-dev pkg-config libboost-system-dev libboost-python-dev libboost-filesystem-dev zlib1g-dev
+# install pre-requisites (ubuntu)
+# sudo apt install -y build-essential python3 bison flex gawk \
+#     git tcl-dev graphviz xdot libreadline-dev libffi-dev pkg-config \
+#     libboost-system-dev libboost-python-dev libboost-filesystem-dev zlib1g-dev
+
+# install pre-requisites (fedora)
+sudo dnf install -y gcc gcc-c++ autoconf automake cmake tcl-devel git python3 \
+    bison flex gperf gawk xdotool graphviz \
+    readline readline-devel libffi-devel pkg-config boost zlib zlib-devel zlibrary
 
 # clone the yosys repo
 git clone https://github.com/YosysHQ/yosys.git
 cd yosys
 
-# configure the build system to use a specific compiler:
-# use clang
-# make config-clang
-# or clang
+# configur the build system to use a specific compiler:
 make config-gcc
 
 # build yosys
@@ -26,7 +31,7 @@ make test
 
 # clean all
 make clean
-make clean-abc 
+make clean-abc
 
 # to uninstall
 # sudo make uninstall
